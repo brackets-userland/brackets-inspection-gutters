@@ -82,7 +82,28 @@ define(function (require, exports, module) {
     }, []);
 
     // sortBy severity and then line number
-    markersForFile = _.sortBy(markersForFile, (obj) => [obj.type, obj.pos.line]);
+    markersForFile = _.sortBy(markersForFile, (obj) => {
+      switch (obj.type) {
+        case 'problem_type_error':
+          return [1, obj.pos.line];
+        case 'problem_type_warning':
+          return [2, obj.pos.line];
+        case 'problem_type_meta':
+          return [3, obj.pos.line];
+        default:
+          return [4, obj.pos.line];
+      }
+    });
+
+    // make sure we don't put two markers on the same line
+    const lines = [];
+    markersForFile = markersForFile.filter(obj => {
+      if (lines.indexOf(obj.pos.line) === -1) {
+        lines.push(obj.pos.line);
+        return true;
+      }
+      return false;
+    });
 
     const cm = editor._codeMirror;
 
