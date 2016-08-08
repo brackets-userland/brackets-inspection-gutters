@@ -5,14 +5,13 @@ import { CodeInspectionReport, CodeInspectionResult, GutterOptions } from './mai
 
 define(function (require, exports, module) {
 
-  // Brackets modules
+  // brackets modules
   const _ = brackets.getModule('thirdparty/lodash');
   const DocumentManager = brackets.getModule('document/DocumentManager');
   const ExtensionUtils = brackets.getModule('utils/ExtensionUtils');
   const MainViewManager = brackets.getModule('view/MainViewManager');
   const EditorManager = brackets.getModule('editor/EditorManager');
 
-  ExtensionUtils.loadStyleSheet(module, '../styles/styles.less');
   // constants from stylesheet
   const GUTTER_NAME = 'brackets-inspection-gutter';
   const GUTTER_MARKER_NAME = 'brackets-inspection-gutter-marker';
@@ -20,6 +19,7 @@ define(function (require, exports, module) {
   const GUTTER_ERROR_CLASS = 'brackets-inspection-gutter-error';
   const CM_LINE_NUMBER_GUTTER = 'CodeMirror-linenumbers';
 
+  // to hold stuff in memory
   const markers = {};
   const editorsWithGutters = [];
 
@@ -63,10 +63,9 @@ define(function (require, exports, module) {
   }
 
   function prepareGutters(editors) {
-    editors.forEach(function (editor) {
-      prepareGutter(editor);
-    });
-      // clear the rest
+    editors.forEach(editor => prepareGutter(editor));
+
+    // clear the rest
     let idx = editorsWithGutters.length;
     while (idx--) {
       if (editors.indexOf(editorsWithGutters[idx]) === -1) {
@@ -145,6 +144,7 @@ define(function (require, exports, module) {
   module.exports = function init() {
     const w = (<any> window);
     if (w.bracketsInspectionGutters) { return; }
+    ExtensionUtils.loadStyleSheet(module, '../styles/styles.less');
     w.bracketsInspectionGutters = { set };
   };
 
