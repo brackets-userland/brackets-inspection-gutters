@@ -85,13 +85,13 @@ define(function (require, exports, module) {
     markersForFile = _.sortBy(markersForFile, (obj) => {
       switch (obj.type) {
         case 'problem_type_error':
-          return [1, obj.pos.line];
+          return '1' + _.padLeft(obj.pos.line, 5, '0');
         case 'problem_type_warning':
-          return [2, obj.pos.line];
+          return '2' + _.padLeft(obj.pos.line, 5, '0');
         case 'problem_type_meta':
-          return [3, obj.pos.line];
+          return '3' + _.padLeft(obj.pos.line, 5, '0');
         default:
-          return [4, obj.pos.line];
+          return '4' + _.padLeft(obj.pos.line, 5, '0');
       }
     });
 
