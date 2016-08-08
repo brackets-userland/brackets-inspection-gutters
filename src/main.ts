@@ -127,6 +127,13 @@ define(function (require, exports, module) {
 
     // filter the report by passed options first
     const errors = report.errors.filter((result: CodeInspectionResult) => {
+      if (
+        result.type !== 'problem_type_error' &&
+        result.type !== 'problem_type_warning' &&
+        result.type !== 'problem_type_meta'
+      ) {
+        console.warn(`${sourceId} -> Unexpected error type: ${result.type}`);
+      }
       if (options === true) { return true; }
       if (options === false) { return false; }
       if (result.type === 'problem_type_error' && (<GutterOptions> options).error !== true) {
