@@ -17,9 +17,8 @@
   },
   "scripts": {
     "dev": "tsc --watch",
-    "test": "tsc && tslint -c tslint.json --project tsconfig.json",
-    "postinstall": "typings install",
-    "prepublish": "tsc"
+    "test": "typings install && tsc && tslint -c tslint.json --project tsconfig.json",
+    "prepublish": "typings install && tsc"
   },
   "dependencies": {},
   "devDependencies": {
