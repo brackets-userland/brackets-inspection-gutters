@@ -24,7 +24,7 @@ export interface GutterOptions {
   meta: boolean;
 }
 
-define(function (require, exports, module) {
+define((require, exports, module) => {
 
   // brackets modules
   const _ = brackets.getModule('thirdparty/lodash');
@@ -134,7 +134,7 @@ define(function (require, exports, module) {
 
     cm.clearGutter(GUTTER_NAME);
 
-    markersForFile.forEach(function (obj: CodeInspectionResult) {
+    markersForFile.forEach((obj: CodeInspectionResult) => {
       const severity = obj.type === 'problem_type_error' ? GUTTER_ERROR_CLASS : GUTTER_WARNING_CLASS;
       const $marker = $('<div><span>')
                         .attr('title', obj.message)
@@ -178,7 +178,7 @@ define(function (require, exports, module) {
     markers[fullPath][sourceId] = errors;
 
     // get a list of editors, which need to be refreshed
-    const editors = _.compact(_.map(MainViewManager.getPaneIdList(), function (paneId) {
+    const editors = _.compact(_.map(MainViewManager.getPaneIdList(), (paneId) => {
       const currentPath = MainViewManager.getCurrentlyViewedPath(paneId);
       const doc = currentPath && DocumentManager.getOpenDocumentForPath(currentPath);
       return doc && doc._masterEditor;
@@ -194,7 +194,7 @@ define(function (require, exports, module) {
 
   }
 
-  module.exports = function init() {
+  module.exports = () => {
     const w = (<any> window);
     if (w.bracketsInspectionGutters) { return; }
     ExtensionUtils.loadStyleSheet(module, '../styles/styles.less');
