@@ -1,7 +1,28 @@
 declare var brackets: any;
 declare var define: any;
 
-import { CodeInspectionReport, CodeInspectionResult, GutterOptions } from './main.d.ts';
+export type CodeInspectionResultType = 'problem_type_error' | 'problem_type_warning' | 'problem_type_meta';
+
+export interface CodeInspectionPosition {
+  line: number;
+  ch: number;
+}
+
+export interface CodeInspectionResult {
+  type: CodeInspectionResultType;
+  message: string;
+  pos: CodeInspectionPosition;
+}
+
+export interface CodeInspectionReport {
+  errors: Array<CodeInspectionResult>;
+}
+
+export interface GutterOptions {
+  error: boolean;
+  warning: boolean;
+  meta: boolean;
+}
 
 define(function (require, exports, module) {
 
@@ -76,6 +97,10 @@ define(function (require, exports, module) {
   }
 
   function showGutters(editor, fullPath: string) {
+
+    if (markers[fullPath] == null) {
+      markers[fullPath] = {};
+    }
 
     let markersForFile: Array<CodeInspectionResult> = Object.keys(markers[fullPath]).reduce((arr, sourceId) => {
       return arr.concat(markers[fullPath][sourceId]);
