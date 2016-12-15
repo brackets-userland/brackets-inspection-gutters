@@ -142,7 +142,8 @@ define((require, exports, module) => {
       $marker.find('span')
         .addClass(severity)
         .html('&nbsp;');
-      cm.setGutterMarker(obj.pos.line, GUTTER_NAME, $marker[0]);
+      const line = _.get(obj, 'pos.line') || 0;
+      cm.setGutterMarker(line, GUTTER_NAME, $marker[0]);
     });
   }
 
