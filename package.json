@@ -17,8 +17,10 @@
   },
   "scripts": {
     "dev": "tsc --watch",
-    "test": "tsc && tslint -c tslint.json --project tsconfig.json",
-    "prepublish": "tsc"
+    "test": "npm run prepublish",
+    "prepublish": "npm prune && npm update && npm run build && npm run lint",
+    "build": "rimraf ./dist && tsc",
+    "lint": "tslint -c tslint.json --project tsconfig.json"
   },
   "dependencies": {},
   "devDependencies": {
