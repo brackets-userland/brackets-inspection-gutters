@@ -15,7 +15,7 @@ export interface CodeInspectionResult {
 }
 
 export interface CodeInspectionReport {
-  errors: Array<CodeInspectionResult>;
+  errors: CodeInspectionResult[];
 }
 
 export interface GutterOptions {
@@ -84,7 +84,7 @@ define((require, exports, module) => {
   }
 
   function prepareGutters(editors) {
-    editors.forEach(editor => prepareGutter(editor));
+    editors.forEach((editor) => prepareGutter(editor));
 
     // clear the rest
     let idx = editorsWithGutters.length;
@@ -102,7 +102,7 @@ define((require, exports, module) => {
       markers[fullPath] = {};
     }
 
-    let markersForFile: Array<CodeInspectionResult> = Object.keys(markers[fullPath]).reduce((arr, sourceId) => {
+    let markersForFile: CodeInspectionResult[] = Object.keys(markers[fullPath]).reduce((arr, sourceId) => {
       return arr.concat(markers[fullPath][sourceId]);
     }, []);
 
@@ -122,7 +122,7 @@ define((require, exports, module) => {
 
     // make sure we don't put two markers on the same line
     const lines = [];
-    markersForFile = markersForFile.filter(obj => {
+    markersForFile = markersForFile.filter((obj) => {
       if (lines.indexOf(obj.pos.line) === -1) {
         lines.push(obj.pos.line);
         return true;
@@ -162,13 +162,13 @@ define((require, exports, module) => {
       }
       if (options === true) { return true; }
       if (options === false) { return false; }
-      if (result.type === 'problem_type_error' && (<GutterOptions> options).error !== true) {
+      if (result.type === 'problem_type_error' && (options as GutterOptions).error !== true) {
         return false;
       }
-      if (result.type === 'problem_type_warning' && (<GutterOptions> options).warning !== true) {
+      if (result.type === 'problem_type_warning' && (options as GutterOptions).warning !== true) {
         return false;
       }
-      if (result.type === 'problem_type_meta' && (<GutterOptions> options).meta !== true) {
+      if (result.type === 'problem_type_meta' && (options as GutterOptions).meta !== true) {
         return false;
       }
       return true;
@@ -196,7 +196,7 @@ define((require, exports, module) => {
   }
 
   module.exports = () => {
-    const w = (<any> window);
+    const w = (window as any);
     if (w.bracketsInspectionGutters) { return; }
     ExtensionUtils.loadStyleSheet(module, '../styles/styles.less');
     w.bracketsInspectionGutters = { set };

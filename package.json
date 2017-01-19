@@ -1,6 +1,6 @@
 {
   "name": "brackets-inspection-gutters",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Adds global inspection gutters to Brackets",
   "keywords": [],
   "homepage": "https://github.com/zaggino/brackets-inspection-gutters",
@@ -25,7 +25,8 @@
   "dependencies": {},
   "devDependencies": {
     "@types/jquery": "^2.0.34",
-    "tslint": "^3.14.0",
+    "rimraf": "^2.5.4",
+    "tslint": "^4.3.1",
     "typescript": "^2.0.0"
   },
   "engines": {
