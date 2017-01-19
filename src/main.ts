@@ -189,7 +189,7 @@ define((require, exports, module) => {
     prepareGutters(editors);
 
     const activeEditor = EditorManager.getActiveEditor();
-    if (activeEditor.document === DocumentManager.getOpenDocumentForPath(fullPath)) {
+    if (activeEditor && activeEditor.document === DocumentManager.getOpenDocumentForPath(fullPath)) {
       showGutters(activeEditor, fullPath);
     }
 
